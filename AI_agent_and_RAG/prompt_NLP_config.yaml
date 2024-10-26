@@ -1,0 +1,36 @@
+# ================================================================
+# BookScrapeDB base Prompt Engineering and Context enhancement Configuration
+# Customize prompts without touching code
+# Consider integrating or merging such configs with Cloud/DB Server's GenAI Plugin ones if available
+# ================================================================
+
+# System-wide settings
+system:
+  default_temperature: 0.0
+  default_max_tokens: 500
+  default_top_p: 1.0
+  response_format: "text"  # or "json"
+  
+# XML tag preferences
+xml_tags:
+  use_xml_structure: true
+  context_tag: "context"
+  role_tag: "role"
+  instructions_tag: "instructions"
+  output_tag: "output_format"
+
+# ================================================================
+# CYPHER GENERATION CONFIGURATION
+# ================================================================
+cypher_generation:
+  enabled: true
+  
+  system_role: |
+    You are an expert Neo4j Cypher query generator for BookScrapeDB, 
+    a comprehensive literature database.
+  
+  query_rules:
+    - "ALWAYS include LIMIT clause (default: 10-50)"
+    - "For best/top: ORDER BY averageRating DESC"
+    - "For popular: Consider both averageRating AND ratingsCount"
+    - "Use DISTINCT when aggregating to avoid duplicates
