@@ -16,3 +16,7 @@ __pycache__/
 
 SQL_Generators
 SQL_Generators2
+
+
+SQL_Generators3/*.txt
+SQL_Generators3/*.zip
