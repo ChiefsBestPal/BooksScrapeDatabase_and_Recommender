@@ -1,6 +1,15 @@
 # BooksDatabase_SOEN363_Project
+Antoine Cantin 2024-2025
+## Maintaining and subprojects outside class
+____
+Initially, meant for final project of SOEN363 Databases class. \
+But most features/logic of the project (especially scraping-wise) were a little overkill/were more comprehensive then needed for class 
 
-APIs and public data sources:
+> Thus this project is maintained, improved and reused for mutiple subprojects / personal purposes. \
+**Lead designer, Main coder, Maintainer: Antoine Cantin 'ChiefsBestPal'**
+____
+
+## APIs and public data sources:
 
 > https://www.goodreads.com/api (Meaningful for community aspect of sharing, reviewing, commenting etc...)
 
@@ -10,7 +19,13 @@ APIs and public data sources:
 
 > https://isbndb.com/ (Great to obtain formal statistics, IDs, etc... of authors, books and collections)
 
-> NYtimes or other??? (Only If we are doing blogs and articles...)
+## Special unique features
+
+- SQL DML Code generator for lists,authors, books, reviews
+- Goodreads Reviews scrapping
+- Use of multiple APIs, all of which's data are cross referenced and combined parsed into clean outputs
+- Multi-thread and items pairing abilities for more efficient spiders
+- Raw search keywords spider + commands
 
 ## Example outputs
 ### Raw web scrapped files from all spiders
