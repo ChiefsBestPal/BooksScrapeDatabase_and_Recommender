@@ -1,0 +1,18 @@
+# Ignore all compiled artifacts
+*.pyc
+
+# Ignore logs
+*.log
+
+# Ignore generated datasets
+*.jl
+*.csv
+*.json
+
+# Ignore virtualenv
+gscraper
+
+__pycache__/
+
+SQL_Generators
+SQL_Generators2
