@@ -1,5 +1,5 @@
-CREATE DATABASE myDB;
-USE myDB;
+CREATE DATABASE bookDB;
+USE bookDB;
 
 -- Entities
 CREATE TABLE Book (
@@ -287,7 +287,7 @@ END;
 DELIMITER ;
 
 -- Test the trigger by deleting a record from the Book table
-DELETE FROM Book WHERE book_id = 1
+DELETE FROM Book WHERE book_id = 1;
 
 -- Check if associated records are deleted from the BookGenre table
 SELECT * FROM BookGenre WHERE book_id = 1;
