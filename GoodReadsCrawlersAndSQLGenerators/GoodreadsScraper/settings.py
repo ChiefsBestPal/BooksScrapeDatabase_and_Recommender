@@ -74,7 +74,8 @@ ITEM_PIPELINES = {
 # uncomment the following line (if commented)
 # This will create a file in the directory where you run
 # that keeps track of seen URLs, and avoids scraping duplicate URLs
-DUPEFILTER_CLASS = 'GoodreadsScraper.custom_filters.SeenUrlFilter'
+#! DUPEFILTER_CLASS = 'GoodreadsScraper.custom_filters.SeenUrlFilter'
+DUPEFILTER_CLASS = 'scrapy.dupefilters.RFPDupeFilter'
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See http://doc.scrapy.org/en/latest/topics/autothrottle.html

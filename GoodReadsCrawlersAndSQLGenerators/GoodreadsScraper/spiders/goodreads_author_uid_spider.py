@@ -2,7 +2,7 @@ import scrapy
 
 from scrapy.loader import ItemLoader
 from scrapy.item import Field, Item
-from scrapy.loader.processors import TakeFirst
+from itemloaders.processors import TakeFirst #from scrapy.loader.processors import TakeFirst
 
 
 class AuthorUidItem(Item):

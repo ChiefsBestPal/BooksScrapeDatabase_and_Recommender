@@ -28,22 +28,32 @@ class SearchSpider(scrapy.Spider):
                 "search_type": "books"
             }
             search_url = base_url + urlencode(params)
-            yield scrapy.Request(url=search_url,
-                                 callback=self.parse_search_results,
-                                 meta={"original_title": title})
-
+            try:
+                print(search_url)
+                yield scrapy.Request(url=search_url,
+                                    callback=self.parse_search_results,
+                                    meta={"original_title": title},
+                                    dont_filter=True
+                                    )
+            except Exception as err:
+                print(err)
     def parse_search_results(self, response):
         """
         Parse the search result page, find the best match link to "/book/show/<id>",
         follow that link to scrape details using BookSpider logic.
         """
+        print("a")
         original_title = response.meta["original_title"]
-
+        print("b : ", original_title)
         # For demonstration, we pick the top result. 
-        # Real logic might involve fuzzy matching or checking the 'desired_language' if available.
-        first_result = response.css("a.bookTitle::attr(href)").get()  # e.g. "/book/show/12345-something"
+        #todo Real logic might involve fuzzy matching or checking the 'desired_language' if available.
+        #first_result = response.css("a.bookTitle::attr(href)").get()  # e.g. "/book/show/12345-something"
+        first_result = response.css("table tbody tr:first-of-type td:nth-of-type(2) a.bookTitle::attr(href)").extract()
+
+        print(original_title, "\n\r", first_result)
         if first_result:
             book_url = response.urljoin(first_result)
+             
             yield scrapy.Request(book_url,
                                  callback=self.parse_book_page,
                                  meta={"original_title": original_title})
