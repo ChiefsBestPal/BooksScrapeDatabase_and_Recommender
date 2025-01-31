@@ -1,9 +1,10 @@
-# BooksDatabase_SOEN363_Project
-Antoine Cantin 2024-2025
-## Maintaining and subprojects outside class
+# Books Database(s) Generators and Concurrent Crawlers for litterature data
+2024-?
+## Maintaining and scaling
 ____
-Initially, meant for final project of SOEN363 Databases class. \
-But most features/logic of the project (especially scraping-wise) were a little overkill/were more comprehensive then needed for class 
+Initially, first early releases meant for final project of SOEN363 Databases class. \
+But most features/logic of the project (especially scraping-wise) were quite beyond the scope of requirements and more comprehensive then needed for class \
+since I have pursued this project in my free time for personal use with bots and automation. And still intend to do so in the future.
 
 > Thus this project is maintained, improved and reused for mutiple subprojects / personal purposes. \
 **Lead designer, Main coder, Maintainer: Antoine Cantin 'ChiefsBestPal'**
