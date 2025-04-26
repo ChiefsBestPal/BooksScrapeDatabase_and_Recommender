@@ -1,5 +1,5 @@
 """
-Version 2.0
+Version 3.0.0 of
 Main Driver BookScrapeDB PageRank & Network Visualizations using data directly from Neo4j Graph Database
 Interactive analysis of influence networks: Authors, Reviewers, Books
 
@@ -8,9 +8,11 @@ These are just base versions and proven base working formulas. Adjust to need
 NB: formulas e.g. normalization/scaling of values into weights/heatmap colors, influence statistical models
 
 TODO: Make seperate files for: 
+TODO            - Decorators, Utils, Context Managers
 TODO            - Dataclasses, Enums, Configs
+TODO            - Test funcs
 TODO            - Main classes
-TODO            - Tests, integrators/connectors
+
 Supports:
   - Neo4j GDS PageRank algorithms
   - Interactive visualization (Pyvis, Plotly)
@@ -54,9 +56,9 @@ except ImportError:
     PLOTLY_AVAILABLE = False
 
 
-# ============
-# DATA MODELS (TODO: TO BE CONFIG-EXTENDED?)
-# ============
+# ================================================================
+# DATA MODELS
+# ================================================================
 
 @dataclass
 class NetworkNode:
@@ -88,9 +90,66 @@ class NetworkEdge:
         if self.properties is None:
             self.properties = {}
             
-# ##################=#####################
+##########################################    
+###### NEO4J DRIVER AND GDS UTILS ########
+##########################################   
+class Neo4jDriverTestConnectionManager:
+    def __init__(self, uri, username: str, password: str):
+        self.uri = uri
+        self.auth = (username, password)
+        self.driver = None
+
+    def __enter__(self):
+        """
+        Initializes the Neo4j driver and verifies connectivity.
+        """
+        try:
+            self.driver = GraphDatabase.driver(self.uri, auth=self.auth)
+            print(f"Neo4j driver initialzed successfully at {self.uri}")
+            self.driver.verify_connectivity()
+            print("Neo4j driver verified successfully")
+            return self.driver
+        except Exception as e:
+            print(f"Failed to connect to Neo4j: {e}")
+            raise
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        """
+        Closes the Neo4j driver when exiting the 'with' block.
+        """
+        if self.driver:
+            self.driver.close()
+            self.driver = None
+        if exc_type:
+            print(f"An exception occurred within the Neo4j context: {exc_val}")
+            raise exc_val
+
+def drop_existing_projection(graph_name: str):
+    """
+    Decorator to drop an existing GDS graph projection before creating a new one.
+    
+    Args:
+        graph_name: Name of the graph projection to drop if it exists
+    """
+    def decorator(func):
+        @wraps(func)
+        def wrapper(self, *args, **kwargs):
+            # Drop existing projection if it exists
+            with self.driver.session() as session:
+                try:
+                    session.run("CALL gds.graph.drop($graphName)", graphName=graph_name)
+                    print(f"✓ Dropped existing projection: {graph_name}")
+                except Exception:
+                    print(f"ℹ No existing projection '{graph_name}' to drop")
+            
+            # Call the original function to create the projection
+            return func(self, *args, **kwargs)
+        
+        return wrapper
+    return decorator
+# ================================================================
 # NEO4J PAGERANK CALCULATOR
-# ##################=#####################
+# ================================================================
 
 class Neo4jPageRankCalculator:
     """Calculate PageRank and other centrality measures in Neo4j using GDS"""
@@ -103,6 +162,7 @@ class Neo4jPageRankCalculator:
     ):
         self.driver = GraphDatabase.driver(uri, auth=(username, password))
     
+    @drop_existing_projection(graph_name="authorInfluenceGraph")
     def create_author_influence_projection(self) -> str:
         """Create projection for author influence network"""
         #? REMOVED:  a.author_id as author_id, a.person_name as name (GDS DOESNT SUPPORT STRING PROPERTIES IN PROJECTIONS)
@@ -124,6 +184,7 @@ class Neo4jPageRankCalculator:
             print(f"  Nodes: {record['nodeCount']}, Relationships: {record['relationshipCount']}")
             return record['graphName']
         
+    @drop_existing_projection(graph_name="reviewerInfluenceGraph")
     def create_reviewer_influence_projection(self) -> str:
         """Create projection for reviewer influence network"""
         #? REMOVED:  r.reviewer_id as reviewer_id, r.person_name as name (GDS DOESNT SUPPORT STRING PROPERTIES IN PROJECTIONS)
@@ -145,6 +206,7 @@ class Neo4jPageRankCalculator:
             print(f"✓ Created projection: {record['graphName']}")
             return record['graphName']
     
+    @drop_existing_projection(graph_name="bookInfluenceGraph")
     def create_book_influence_projection(self) -> str:
         """Create projection for book influence network"""
         query = """
@@ -765,7 +827,159 @@ class NetworkAnalyzer:
         """Find hub nodes (high closeness centrality)"""
         return sorted(nodes, key=lambda n: n.closeness_score, reverse=True)[:top_k]
 
-
+def TEST_PYVIS_create_interactive_htmlV2(*,    
+    uri: str,
+    username: str,
+    password: str,
+    use_detailed_labels=True,
+    limit_top_nodes=20,
+    physics=True):
+    """Create interactive HTML visualization using Pyvis"""
+    
+    try:
+        from pyvis.network import Network
+    except ImportError:
+        print("⚠️  Pyvis not installed. Install with: pip install pyvis")
+        return
+    
+    driver = GraphDatabase.driver(uri, auth=(username, password))
+    
+    # Get data (reuse query logic)
+    with driver.session() as session:
+        result = session.run(f"""
+            MATCH (r:Reviewer)-[rev:REVIEWED]->(b:Book)
+            WITH r, 
+                 count(rev) AS reviewCount,
+                 sum(rev.likeCount) AS totalLikes,
+                 r.followersCount AS followers,
+                 (r.followersCount * 0.5 + sum(rev.likeCount) * 0.3 + count(rev) * 0.2) AS influence
+            WHERE influence > 0
+            RETURN r.reviewer_id AS id, r.person_name AS name, 
+                   followers, reviewCount, totalLikes, influence
+            ORDER BY influence DESC
+            LIMIT {limit_top_nodes}
+        """)
+        
+        reviewers = {r['id']: r for r in result}
+        reviewer_ids = list(reviewers.keys())
+    
+    with driver.session() as session:
+        result = session.run("""
+            MATCH (r1:Reviewer)-[rev1:REVIEWED]->(b:Book)<-[rev2:REVIEWED]-(r2:Reviewer)
+            WHERE r1.reviewer_id IN $ids AND r2.reviewer_id IN $ids
+              AND r1.reviewer_id < r2.reviewer_id
+            WITH r1, r2, count(DISTINCT b) AS shared
+            WHERE shared > 0
+            RETURN r1.reviewer_id AS r1, r2.reviewer_id AS r2, shared
+        """, ids=reviewer_ids)
+        
+        connections = list(result)
+    
+    driver.close()
+    
+    # Create Pyvis network
+    net = Network(
+        height="1080px",
+        width="100%", 
+        bgcolor="#222222", 
+        font_color="#ffffff",
+        notebook=False
+        #TODO notebook=False  # Important: might fix template error
+    )
+    net.barnes_hut()
+    
+    # Add nodes
+    # FIrst, have normalized distribution of influences to properly generate colors (+0.3 offset so that minimum color starts at ~255/3 for red)
+    influences = list(map(lambda rinfo : rinfo['influence'] / 100,reviewers.values()))
+    min_inf,max_inf = min(influences),max(influences)
+    normalized_influences = [min(1.0,((x - min_inf ) / (max_inf - min_inf))+0.3) for x in influences]
+    
+    def influence_to_color(norm_inf: float,*,hue_offset=0) -> str:
+        """
+        Convert normalized influence (0..1) to a heatmap color (blue → cyan → green → yellow → red).
+        Using HSV hue mapping from 240° (blue) to 0° (red).
+        """
+        hue = (1 - norm_inf) * (240-hue_offset) / 360  # 0 = red, 240 = blue (in HSV hue fraction)
+        r, g, b = colorsys.hsv_to_rgb(hue, 1.0, 1.0)
+        return f"#{int(r*255):02x}{int(g*255):02x}{int(b*255):02x}"
+    
+    for (reviewer_id, info), normalized_influence in zip(reviewers.items(),normalized_influences):
+        color = influence_to_color(normalized_influence,hue_offset=110) #TODO: MAKE OPTION TO CHOOSE SIMPLE: f"#{int(normalized_influence*255):02x}6699"
+        title= f"""<b>{info['name']}</b><br>Followers: {info['followers']:,}<br>Reviews: {info['reviewCount']}<br>Total Likes: {info['totalLikes']:,}<br>Influence: {info['influence']:.0f}"""
+        print("ADDING NODE: ",info, {'color': color})
+        net.add_node(
+            reviewer_id,
+            label=info['name'] if not use_detailed_labels else title.replace("<br>","\n\r").replace("<b>",u"*").replace("</b>",u"*"),#.replace("<b>",u"\x1b[1m").replace("</b>",u"\x1b[0m"),
+            title=title,
+            size=info['influence']/10,
+            value=info['influence']/10,
+            shape="circle",
+            physics=physics,
+            color=color#f"#{int(min(info['influence']/10, 255)):02x}6699"
+        )
+    
+    # Add edges
+    for conn in connections:
+        net.add_edge(
+            conn['r1'],
+            conn['r2'],
+            value=conn['shared'],
+            title=f"{conn['shared']} shared books",
+            label=str(int(conn['shared'])),
+            physics=physics
+        )
+    
+    # Save - FIX: Use save_graph instead of show
+    # net.show("reviewer_network_interactive2.html")
+    try:
+        net.save_graph("reviewer_network_interactive.html")
+        print("✅ Interactive HTML saved: reviewer_network_interactive.html")
+    except Exception as e:
+        print(f"⚠️  Pyvis save failed: {e}")
+        print("Trying alternative method...")
+        
+        # Alternative: Write HTML manually
+        html_content = f"""
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="utf-8">
+            <title>Reviewer Influence Network</title>
+            <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+            <style>
+                #mynetwork {{
+                    width: 100%;
+                    height: 750px;
+                    background-color: #222222;
+                    border: 1px solid lightgray;
+                }}
+            </style>
+        </head>
+        <body>
+            <div id="mynetwork"></div>
+            <script type="text/javascript">
+                var nodes = new vis.DataSet([
+                    {list(f'{{id: {rid}, label: "{info["name"]}", title: "{info["name"]}<br>Followers: {info["followers"]}<br>Reviews: {info["reviewCount"]}", size: {info["influence"]/10}, color: "#6699cc"}}' for rid, info in reviewers.items())}
+                ]);
+                var edges = new vis.DataSet([
+                    {list(f'{{from: {conn["r1"]}, to: {conn["r2"]}, value: {conn["shared"]}, title: "{conn["shared"]} shared books"}}' for conn in connections)}
+                ]);
+                var container = document.getElementById('mynetwork');
+                var data = {{nodes: nodes, edges: edges}};
+                var options = {{
+                    physics: {{
+                        barnesHut: {{gravitationalConstant: -8000, springLength: 200}}
+                    }}
+                }};
+                var network = new vis.Network(container, data, options);
+            </script>
+        </body>
+        </html>
+        """
+        
+        with open("reviewer_network_interactive.html", "w", encoding="utf-8") as f:
+            f.write(html_content)
+        print("✅ Interactive HTML saved (alternative method): reviewer_network_interactive.html")
 # ================================================================
 # CLI & MAIN EXECUTION
 # ================================================================
@@ -796,7 +1010,23 @@ def main():
         username=os.getenv(r"NEO4J_DEV_DBMS_USER"),
         password=os.getenv(r"NEO4J_DEV_DBMS_PWD")
     )
-
+    if args.test_funcs:
+        print("############### RUNNING TEST FUNCTIONS ONLY ###############\n\r")
+        TEST_PYVIS_create_interactive_htmlV2(**NEO4J_AUTH_ENV_ARGS)
+        return
+    try:
+        with Neo4jDriverTestConnectionManager(**NEO4J_AUTH_ENV_ARGS) as driver:
+            print("[CONTEXT MANAGER] Neo4j driver ready for simple query test.")
+            with driver.session() as session:
+                # Example query
+                result = session.run("MATCH (n) RETURN n LIMIT 1")
+                for record in result:
+                    print(record)
+    except Exception as e:
+        print(f"[CONTEXT MANAGER] An error occurred: {e}")
+        raise e
+    finally:
+        print("[CONTEXT MANAGER] Neo4j Driver Connection test passed !")
     # Initialize calculator
     calc = Neo4jPageRankCalculator(
         **NEO4J_AUTH_ENV_ARGS
