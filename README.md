@@ -1,5 +1,9 @@
 # Books Database(s) Generators and Concurrent Crawlers for litterature data
 Since 2024
+<img width="1412" height="678" alt="image" src="https://github.com/user-attachments/assets/7b80b8b7-aefd-4287-b927-420496347aa4" />
+
+<img width="1308" height="722" alt="image" src="https://github.com/user-attachments/assets/ef19a897-d30e-4615-b1b4-929fcc415ffa" />
+
 ## Maintaining and scaling
 ____
 This project is maintained, improved and reused for mutiple subprojects / personal purposes. \
