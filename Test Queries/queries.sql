@@ -117,25 +117,25 @@ WHERE (
 -- 6. One example per set operations: intersect, union, and diFFerence vs. their equivalences without using set operations.
 -- INTERSECT
 
-SELECT * FROM Book WHERE language = 'English'
+SELECT * FROM Book WHERE language = 'en'
 INTERSECT
 SELECT * FROM Book WHERE subtitle is NULL;
 
-SELECT * FROM Book WHERE language = 'English' AND subtitle is NULL;
+SELECT * FROM Book WHERE language = 'en' AND subtitle is NULL;
 
 -- UNION
-SELECT * FROM Book WHERE language = 'English'
+SELECT * FROM Book WHERE language = 'en'
 UNION
 SELECT * FROM Book WHERE subtitle is NULL;
 
-SELECT * FROM Book WHERE language = 'English' OR subtitle is NULL;
+SELECT * FROM Book WHERE language = 'en' OR subtitle is NULL;
 
 -- EXCEPT
-SELECT * FROM Book WHERE language = 'English'
+SELECT * FROM Book WHERE language = 'en'
 EXCEPT
 SELECT * FROM Book WHERE subtitle is NULL;
 
-SELECT * FROM Book WHERE language = 'English' AND subtitle is NULL;
+SELECT * FROM Book WHERE language = 'en' AND subtitle is NULL;
 
 
 
