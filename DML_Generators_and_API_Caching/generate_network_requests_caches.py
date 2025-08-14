@@ -19,40 +19,6 @@ csv_file2 = 'authors_final_antoine.csv'
 json_file1 = 'reviewers_final_antoine.json'
 json_file2 = 'reviews_final_antoine.json'
 json_file3 = 'authoruids2.json'
-# nested_dict = {
-#     "key1": "value1",
-#     "key2": {
-#         "nested_key1": "nested_value1",
-#         "nested_key2": "nested_value2",
-#         "nested_key3": {
-#             "inner_nested_key1": "inner_nested_value1",
-#             "inner_nested_key2": "inner_nested_value2"
-#         },
-#         "nested_key4": "nested_value4",
-#         "nested_key5": {
-#             "inner_nested_key3": "inner_nested_value3"
-#         }
-#     },
-#     "key3": "value3",
-#     "key4": {
-#         "nested_key6": "nested_value6",
-#         "nested_key7": {
-#             "inner_nested_key4": "inner_nested_value4",
-#             "inner_nested_key5": {
-#                 "inner_inner_nested_key1": "inner_inner_nested_value1"
-#             }
-#         }
-#     },
-#     "key5": "value5"
-# }
-# results = {}
-# with open("test.json", 'w') as file:
-#     for key,value in nested_dict.items():
-#         results[key] = value
-#         json.dump(results,file,indent=4)
-#         time.sleep(1)
-
-# exit()
 
 
 #data4_cache_file = 'data4_final_cache.pkl'
@@ -906,6 +872,6 @@ def main():
     print("ACTUALLY DONE NOW")
 if __name__ == '__main__':
     
-    assert os.getcwd().split(os.sep)[-1] == r"SQL_Generators3"
+    #assert os.getcwd().split(os.sep)[-1] == r"SQL_Generators3"
     
     main()

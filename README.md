@@ -30,9 +30,12 @@ ____
 
 - SQL DML Code generator for lists,authors, books, reviews
 - Goodreads Reviews scrapping
+- NoSQL Neo4j optimized data visualizations and analysis
 - Use of multiple APIs, all of which's data are cross referenced and combined parsed into clean outputs
 - Multi-thread and items pairing abilities for more efficient spiders
 - Raw search keywords spider + commands
+- Specific probability/statistical models for relevant rating systems to properly profile a reader and make recommendation for it
+- Neo4j queries+scripts to identify and learn reading trends, cross-genre factors, authors' influence networks, find niche series/books from complex reviewers patterns
 
 ## Original ERD ... Slightly different for "NoSQL schemas"
 <img width="1831" height="1743" alt="ERD_DataModel" src="https://github.com/user-attachments/assets/aebcc229-eed6-4317-8ceb-4756f0f416db" />
@@ -87,7 +90,7 @@ INSERT dml statements to populate the db.
 ## Code information
 > Large codebase (Few thousand lines); First Phase took a week and final generators went through 6 major versions
 
-1. Our 2 APIs (Google books and Open Library) have 3 total requests per book profile iteration. This can be extremely long and present networking issues so ```All_Scripts\DML_Generators\generate_network_requests_caches.py``` allows one to leave this script running and cache in a spec_dict.json all the necessary requests informations which speeds up the DML generation exponentially and makes our whole operation alongside webscraping, parsing operations and checks much less flaky, much faster and much more reliable / versatile. 
+1. Our 2 APIs (excluding crawled websites) (Google books and Open Library) have 3 total requests per book profile iteration. This can be extremely long and present networking issues so ```All_Scripts\DML_Generators\generate_network_requests_caches.py``` allows one to leave this script running and cache in a spec_dict.json all the necessary requests informations which speeds up the DML generation exponentially and makes our whole operation alongside webscraping, parsing operations and checks much less flaky, much faster and much more reliable / versatile. 
 
 2. Webscrapping has been performed at several levels. Multiple different concurrent spider / crawling techniques were tested, optimized and developped over the course of several days. \
 The initial code is inspired and taken from ```https://github.com/havanagrawal/GoodreadsScraper```, but we completely repurposed it and ALSO added enormously onto it by creating different types of crawlers, loaders, networking settings tests and optimizations, etc....
@@ -98,11 +101,11 @@ The initial code is inspired and taken from ```https://github.com/havanagrawal/G
 ```GoodreadsScraper/spiders/...``` to see goodreads crawlers and other crawlers
 
 
-## Results
+## Results of first phases
 
 Over the course of several days and nights, over 1 GB of total data was API requested and Webscrapped by several different crawlers on different machines. Caches and data structure optimizations played a huge role in final success and later versions of the codes. <br>
 
-Our information was then formatted, cleaned up, verified and structured into readable csv and json files before being all processed, integrated and linked together in the main.py code to generate necessary MySQL DML code.
+Our information was then formatted, cleaned up, verified and structured into readable csv and json files before being all processed, integrated and linked together in the main.py code to generate necessary MySQL DML code. It is then straight forward to take make CSVs out of the SQL db populated by these DML and make a Neo4j NoSQL Graph database out of said CSVs, using DDL constraints, attributes, indexes the same in neo4j's cypher.
 
 
 
