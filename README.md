@@ -1,5 +1,8 @@
 # Books Database(s) Generators and Concurrent Crawlers for litterature data
-Since 2024
+Since 2024 \
+Multi-source literature analytics platform processing 100k+ books' and millions of compiled online reviews. Combines cached APIs, custom crawlers web scraping, automatically populated SQL/NoSQL databases, and graph analytics to identify niche markets, statistically model sentiment analysis scores, cross-genre trends, and various influence networks/clusters.\
+<br>
+This enables mainly personalized unique book recommendations and cross-market segmentation/adjacency insights, allowing for different community/niches to interconnect and expand based on reading/reviewing-interest profiles
 <img width="1412" height="678" alt="image" src="https://github.com/user-attachments/assets/7b80b8b7-aefd-4287-b927-420496347aa4" />
 
 <img width="1308" height="722" alt="image" src="https://github.com/user-attachments/assets/ef19a897-d30e-4615-b1b4-929fcc415ffa" />
