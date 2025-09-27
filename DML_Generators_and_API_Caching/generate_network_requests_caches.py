@@ -12,6 +12,20 @@ from line_profiler import LineProfiler
 
 from tqdm import tqdm
 
+__doc__ = """
+[THIS PUBLIC CODE FILE IS OBFUSCATED SLIGHTLY FOR SECURITY ,
+AND IT MAY NOT CONTAIN ALL SOURCE NECESSARY FOR DEVELOPERS WANTING TO CONTRIBUTE
+Contact @ChiefsBestPal for full access to clean,complete, unobfuscated code
+See README Compliance notice for theses modules Post-Extraction/Transformation
+]
+# `generate_network_requests_caches.py`
+**Purpose**: Data collection and caching script
+- Fetches additional book metadata from Google Books API and Open Library API
+- Caches API responses to avoid repeated requests
+- Handles network errors and rate limiting
+- Outputs cached data to JSON file for later processing
+"""
+
 csv_file1 = 'books_final_antoine.csv'
 csv_file2 = 'authors_final_antoine.csv'
 # csv_file1 = 'books_antoine.csv'

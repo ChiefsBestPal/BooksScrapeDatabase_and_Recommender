@@ -2,6 +2,15 @@
 
 This repository contains two Python scripts designed to process scraped Goodreads data and also external APIs' data to generate SQL Data Manipulation Language (DML) statements for populating a relational database.
 
+## **Important Notice**: Code .py obfuscation and data extraction compliance
+> FAQ: Why names like "json77" or lengthy functions/namespaces in raw data extractors / SQL generators?
+
+The artifacts here are not the full Parsing/DML generator subsystems, but enough for full-use by non-dev users wanting their own Literature Data warehouse !
+> Contributors: Contact @ChiefsBestPal for unobfuscated and full-access
+
+The .py files here intentionally obfuscates non-functional identifiers and implements defensive coding practices (variable randomization, comments, function consolidation) against bots, prevent bad compliance scanners false positives, deter unauthorized reverse engineering of proprietary elements, and protect against automated harvesting of scraping-specific implementation details.
+
+
 ## Overview
 
 The scripts transform raw Goodreads data (books, authors, reviewers, reviews) combined with data from Google Books API and Open Library API into normalized SQL INSERT statements for a comprehensive book database.

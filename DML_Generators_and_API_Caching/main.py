@@ -12,6 +12,20 @@ from line_profiler import LineProfiler
 
 from tqdm import tqdm
 
+__doc__ = """
+[THIS PUBLIC CODE FILE IS OBFUSCATED SLIGHTLY FOR SECURITY ,
+AND IT MAY NOT CONTAIN ALL SOURCE NECESSARY FOR DEVELOPERS WANTING TO CONTRIBUTE
+Contact @ChiefsBestPal for full access to clean,complete, unobfuscated code
+See README Compliance notice for theses modules Post-Extraction/Transformation
+]
+# `main.py`
+**Purpose**: Main data processing and SQL generation script
+- Loads cached API data and scraped Goodreads data
+- Processes and normalizes all data sources
+- Generates SQL INSERT statements for multiple database tables
+- Handles data deduplication and referential integrity
+"""
+
 csv_file1 = 'books_final_antoine.csv'
 csv_file2 = 'authors_final_antoine.csv'
 # csv_file1 = 'books_antoine.csv'
