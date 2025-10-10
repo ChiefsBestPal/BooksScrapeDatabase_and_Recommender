@@ -411,7 +411,7 @@ The generated DML files **must** be executed in this exact order to maintain ref
 
 ### 📁 Base ETL Codebase Structure & Highlights
 
-```
+
 ## 🧰 Folder & Code Highlights
 
 * **`DML_Generators_and_API_Caching/main.py`** → generates `.txt` → `.sql` DML inserts for DB
@@ -431,7 +431,6 @@ Over multiple large runs:
 * In one concurrent run: Over **1 GB** of cleaned, structured and semi-structured data created
 * Full transformation from raw data → SQL schema → Neo4j Graph → Analytics dashboards
 * Enables **OLAP**, **community segmentation**, and **AI-assisted recommendation**
-```
 
 
 ### Key Files
