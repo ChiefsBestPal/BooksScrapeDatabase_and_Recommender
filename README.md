@@ -19,10 +19,10 @@
 
 <div style="text-align:justify;">
 
-**Enterprise-grade literature analytics platform** handling up to 100M+ aggregated records of 
+**Enterprise-grade literature cloud analytics platform** handling up to 100M+ aggregated records of 
 books data and reader reviews through automated ETL pipelines, resilient concurrent web scraping, 
 SQL/NoSQL databases, full-stack data engineering, Big Data Graph analytics, and RAG AI agents. Connect literature communities, 
-collect deep behavioral data, drive unique book recommendations, quantify influence, 
+mine deep behavioral data, drive unique book recommendations, quantify influence, 
 identify niches or deliver cross-market forecasts
 </div>
 
@@ -299,8 +299,6 @@ A comprehensive data engineering solution that aggregates, transforms, and analy
 
 ## ⚡ Key Features
 
-```
-
 - ⚙️ **Automated SQL DML Generator** for scalable database population  
 - 🌐 **Concurrent multi-threaded crawlers** (Goodreads, OpenLibrary, Google Books APIs)  
 - 💾 **Smart caching & hash-based request reuse** for massive speed-ups  
@@ -310,7 +308,6 @@ A comprehensive data engineering solution that aggregates, transforms, and analy
 - 🤖 **AI-ready data pipelines (RAG / embedding support)** for LLM-driven reviewer profiling  
 
 
-```
 ### Data Engineering & ETL
 - **Custom SQL DML Code Generator**: Automated INSERT statement generation for all entities (books, authors, reviews, genres, etc.)
 - **Intelligent API Caching**: Persistent caching system reducing API calls by 95%+ and eliminating network flakiness
