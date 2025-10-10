@@ -64,7 +64,7 @@ CREATE TABLE `your-project.bookscraperdb.reviews`
   review_date DATE NOT NULL,
   created_datetime TIMESTAMP,
   likeCount INT64,
-  sentiment_score FLOAT64,
+  base_sentiment_score FLOAT64,
   
   -- Denormalized for query performance
   book_title STRING,
@@ -94,7 +94,7 @@ CREATE TABLE `your-project.bookscraperdb.authors`
   about STRING,
   
   -- Computed fields
-  popularity_score FLOAT64,
+  base_popularity_score FLOAT64,
   is_active BOOL,
   
   ingestion_date DATE
@@ -115,7 +115,7 @@ SELECT
   b.genres,
   COUNT(DISTINCT r.review_id) as review_count,
   AVG(r.rating) as calculated_avg_rating,
-  AVG(r.sentiment_score) as avg_sentiment,
+  AVG(r.base_sentiment_score) as avg_sentiment,
   APPROX_QUANTILES(r.rating, 100)[OFFSET(50)] as median_rating,
   ARRAY_AGG(DISTINCT r.reviewer_id LIMIT 100) as top_reviewers
 FROM `your-project.bookscraperdb.books` b
