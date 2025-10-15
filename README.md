@@ -19,11 +19,11 @@
 
 <div style="text-align:justify;">
 
-**Enterprise-grade literature cloud analytics platform** handling up to 100M+ aggregated records of 
-books data and reader reviews through automated ETL pipelines, resilient concurrent web scraping, 
-SQL/NoSQL databases, full-stack data engineering, Big Data Graph analytics, and RAG AI agents. Connect literature communities, 
-mine deep behavioral data, drive unique book recommendations, quantify influence, 
-identify niches or deliver cross-market forecasts
+**Production-grade Big Data analytics cloud platform** handling over 100M+ aggregated
+records of books data and reader reviews through resilient ETL pipelines, concurrent web
+scraping, SQL/NoSQL/Graph databases, RAG AI agents and full-stack data engineering.
+Connect literature communities, mine deep behavioral data, drive unique book
+recommendations, quantify influence, identify niches or deliver cross-market forecasts
 </div>
 
 > Scaled, Maintained & Actively Developed on **GitHub** and **Cloud Platforms (GCP, Oracle)**
@@ -189,7 +189,7 @@ Project licensing, terms of use, contribution guidelines
   - [Success Stories](#success-stories)
   - [Advanced Analytics](#advanced-analytics)
 - [Platform Screenshots](#-platform-screenshots)
-  - [User Interface](#user-interface)
+  - [User Interfaces](#user-interface)
   - [Technical Architecture](#technical-architecture)
   - [Data Processing Pipeline](#data-processing-pipeline)
 - [Key Features](#-key-features)
@@ -209,9 +209,17 @@ Project licensing, terms of use, contribution guidelines
 ## 📸 Platform Screenshots
 
 <details open>
-<summary><b>🎨 User Interface</b> (Click to expand/collapse)</summary>
+<summary><b>🎨 User Interfaces</b> (Click to expand/collapse)</summary>
 <br>
-
+<div align="center">
+<img  src="https://github.com/user-attachments/assets/7327eac1-abf0-4bac-97f1-eb7aa72d3125" alt="Pagerank+Closeness+Centrality Influence Network">
+<p align="center"><b>Pagerank influence network</b><br><i>See influence of authors,reviewers and books with statistically modeled node/edge weights</i></p>
+</div>
+<div align="center">
+<img src="https://github.com/user-attachments/assets/94506f23-8ca9-4199-bda1-56a27388c96e" alt="BookScrapeDB_ExampleGUI">
+<p align="center"><b>Example GUI</b><br><i>Integrates Neo4j+GDS, GCP, Goodreads+Google links, standalone RAG AI agents, different recommendation filter+scoring</i></p>
+</div>
+<br>
 <table>
 <tr>
 <td width="50%">
