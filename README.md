@@ -1,4 +1,4 @@
-# BookScrapeDB_Recommends ™
+<h1 align="center"> BookScrapeDB_Recommends™ </h1>
 <div align="center">
 <h3>📚 Multi-source Literature ETL, Data Warehouse, Graph-based Recommender and AI Platform</h3>
 
@@ -28,7 +28,8 @@ recommendations, quantify influence, identify niches or deliver cross-market for
 
 > Scaled, Maintained & Actively Developed on **GitHub** and **Cloud Platforms (GCP, Oracle)**
 
-© **Antoine Cantin** @ChiefsBestPal
+© 2024 Antoine Cantin 'ChiefsBestPal' &nbsp;&nbsp; <sup><sub> [⚖️Legal & Compliance Summary](#%EF%B8%8F-legal--compliance-summary) </sup></sub>
+
 
 ## 🎬 Videos: *BookScrapeDB_Recommends* in Action
 
@@ -256,7 +257,7 @@ Project licensing, terms of use, contribution guidelines
 ### Generated SQL DML
 <img src="https://github.com/user-attachments/assets/a9b2b78f-393a-41a6-80b5-95207eb86cea" alt="SQL Code" width="100%">
 
-### Goodreads Reviews Scraper
+### Multi-source User Reviews Aggregator and Scraper
 <img src="https://github.com/user-attachments/assets/3ff5452c-cdfc-4b6a-be80-9fb3c64624c3" alt="Review Scraper Output" width="100%">
 
 </details>
@@ -265,14 +266,14 @@ Project licensing, terms of use, contribution guidelines
 <br>
 
 ## 📚 Project Overview
-```
+
 This project aims to integrates web scraping, API ingestion, data normalization, caching, data warehousing and intuitive graph-based analytics,
- resulting in **unique cross-market insights** (segmentation/adjacency) and **personalized book recommendations** leveraging large amounts 
- of aggregated literary data that would otherwise be innaccessible at such scale, details and quality.
+resulting in **unique cross-market insights** (segmentation/adjacency) and **personalized book recommendations** leveraging large amounts 
+of aggregated literary data that would otherwise be innaccessible at such scale, details and quality.
 
 Allow for different community/niches to interconnect and expand based on reading/reviewing-interest profiles !
 
-
+> [!NOTE]  
 > Originally a database engineering and ETL project, it evolved into a highly refined, cloud integrated  **Big Data platform** with ML and graph NoSQL analytics capabilities, optimizing both data ingestion and community insight generation.
 
 **BookScrapeDB_Recommends** is a multi-source, large-scale literature analytics and recommendation platform that:
@@ -286,7 +287,7 @@ Allow for different community/niches to interconnect and expand based on reading
 - **AI & statistical models** for recommendation, sentiment, and market segmentation
 - Statistically model: ratings scores, cross-genre trends, and various influence networks/clusters.  
 - **Vector+Graph RAG Hybrid embeddings** for reviewer profiling and cross-genre insights using different LLMs
-```
+
 A comprehensive data engineering solution that aggregates, transforms, and analyzes literature data from multiple authoritative sources to generate:
 
 - **For Readers**: Personalized book recommendations using collaborative filtering and sentiment analysis
@@ -341,10 +342,14 @@ A comprehensive data engineering solution that aggregates, transforms, and analy
 
 | Source | Purpose | Role |
 |--------|---------|-------|
-| [Goodreads](https://www.goodreads.com/) | Literature data, Community reviews & ratings (scraped) | Primary (User data + All)|
-| [Google Books API](https://developers.google.com/books) | Authoritative Literature data, Bulk bibliographic metadata | Primary & Validation |
+| [Goodreads](https://www.goodreads.com/) | Main Literature data, Community/user reviews & ratings (scraped) | Primary |
+| [Google Books](https://developers.google.com/books) | Google user/reviews data, Authoritative Literature data, Bulk bibliographic metadata | Primary & Validation |
 | [OpenLibrary API](https://openlibrary.org/) | Catalog, community, metadata enrichment | Secondary (Extra user & Metadata) |
 | [ISBNdb API](https://isbndb.com/) | Formal price statistics, ISBN editions, supply chain | Validation & Market signals |
+
+> [!WARNING]  
+> **User generated content and data is ingested and aggregated through several platforms**, under major LLC or simply crowdsourced indepedent platforms
+> Refer to `CODE_OF_CONDUCT` and `DATA_COMPLIANCE` for legal notices and compliant practices when collecting and mining such profiling/behavioral data
 
 ### Entity Relationship Model
 
@@ -364,11 +369,11 @@ For attributes, dimensions and relationships conditions see Knowledge Graph and 
 └────────┬────────┘
          │
     ┌────▼─────┐
-    │ Raw Data │  JSON/HTML/XML → 1GB+ per run
+    │ Raw Data │  JSON/HTML/XML → 1GB+ per concurrent run (Need respect Rate-limits, robot.txt, etc...)
     └────┬─────┘
          │
   ┌──────▼──────┐
-  │   Parsers   │  Formatters + Validators + Cross-referencers
+  │   Parsers   │  Spark RDDs, API Caching, Regex, Formatters + Validators + Cross-referencers
   └──────┬──────┘
          │
 ┌────────▼─────────┐
@@ -376,11 +381,11 @@ For attributes, dimensions and relationships conditions see Knowledge Graph and 
 └────────┬─────────┘
          │
     ┌────▼────┐
-    │   SQL   │  MySData Warehouse (OLAP-ready)
+    │   SQL   │  Data Warehouse (OLAP-ready) (MySQL server cluster and/or GCP CloudSQL/BQ)
     └────┬────┘
          │
     ┌────▼────┐
-    │  Neo4j  │  Graph Analytics + Visualizations
+    │  Neo4j  │  Graph Analytics + Visualizations, GDS, Python Network Visuals and WIP: Spark GraphX
     └─────────┘
 ```
 
@@ -388,7 +393,7 @@ For attributes, dimensions and relationships conditions see Knowledge Graph and 
 
 ## 📥 Base Database Setup & Population
 
-### DML File Loading Order (Critical!)
+### DML File Loading Order
 
 The generated DML files **must** be executed in this exact order to maintain referential integrity:
 
@@ -416,36 +421,45 @@ The generated DML files **must** be executed in this exact order to maintain ref
 21. thumbnail_dml.sql     -- Image URLs
 ```
 
+> [!IMPORTANT]  
+> DML scripts must be executed in order (book → author → genre → etc.) for base/minimal DB, otherwise revisit both schemas/models and ETL in your new release/fork
 
-### 📁 Base ETL Codebase Structure & Highlights
+### NoSQL vs SQL vs Cloud schemas
+<pre>
+Depending on wheter you are
+     importing CSVs into Neo4j graph database for analytics, 
+     setting up a local SQL RDBMS or 
+     loading GCP cloud storage for native data warheousing in CloudSQL/BQ
+
+You need to look at the right maintenance, schemas and DDL scripts
+</pre>
+<br>
+**Key modules/folders**: `DB_Maintenance`,`Schemas`,`Cloud_Schemas_and_OLAP`
+
+## 📁 Base ETL Codebase Structure & Highlights
 
 
-## 🧰 Folder & Code Highlights
+### 🧰 Key files
 
 * **`DML_Generators_and_API_Caching/main.py`** → generates `.txt` → `.sql` DML inserts for DB
-* **`generate_network_requests_caches.py`** → caches OpenLibrary & GoogleBooks API requests
-* **`Parsers_And_RawFileDump/`** → raw scraped + formatted datasets
-* **`GoodreadsScraper/spiders/`** → custom crawling strategies
+* **`generate_network_requests_caches.py`** → caches OpenLibrary & GoogleBooks API requests | API caching layer (run once per ETL iteration, saves hours on subsequent runs)
+* **`Parsers_And_RawFileDump/`** → raw scraped + formatted datasets, Regex/XML rules, Spark dataframes/datasets, Crawler or external site intermediary formats
+* **`.../spiders/`** → Multiple compliant crawler types (1. lists, 2. user profiles, 3. reviews) for different Goodreads/Google/Externally-linked-platform data 
 
-> ⚠️ DML scripts must be executed in order (book → author → genre → etc.) for DB integrity.
+> [!WARNING]  
+> See `DATA_COMPLIANCE` to use crawlers and scrapers respectfully under ToS and regulations
+> [Consider explicit platform agreement for real-time or enterprise scale]
 
 ---
 
-## 🧾 Example Results
+### 🧾 Example Results
 
 Over multiple large runs:
 
-* Data retrieved from **Goodreads**, **GoogleBooks**, **OpenLibrary**, **ISBNdb**
-* In one concurrent run: Over **1 GB** of cleaned, structured and semi-structured data created
+* Data retrieved from **Goodreads**, **GoogleBooks**, **OpenLibrary**, **ISBNdb** and Externally linked independent sites and data stores (See attributions and compliance in `CODE_OF_CONDUCT`, `DATA_COMPLIANCE`, `PRIVACY_POLICY`)
+* In one concurrent run: Over **1 GB** of cleaned, aggregated, structured and semi-structured data created
 * Full transformation from raw data → SQL schema → Neo4j Graph → Analytics dashboards
 * Enables **OLAP**, **community segmentation**, and **AI-assisted recommendation**
-
-
-### Key Files
-
-- **`main.py`**: Central DML generator with cross-referencing logic and data validation
-- **`generate_network_requests_caches.py`**: API caching layer (run once, saves hours on subsequent runs)
-- **`spiders/`**: Multiple crawler types for different Goodreads data (lists, user profiles, reviews)
 
 ---
 
@@ -457,6 +471,8 @@ Over multiple large runs:
 2. **Concurrent Crawling**: Multi-threaded spiders with intelligent rate limiting
 3. **Hashable Data Structures**: Optimized lookups for cross-referencing across datasets
 4. **Incremental Processing**: Supports partial updates without full regeneration
+5. See issues about integrating Spark GraphX with Neo4j Analytics engine at scale
+6. For SQL server low-level DB tuning and configs, see `mysql.cnf`
 
 ### Crawler Evolution
 
@@ -466,20 +482,39 @@ Original inspiration from [GoodreadsScraper](https://github.com/havanagrawal/Goo
 - Custom item loaders for different data structures
 - Parallel processing capabilities
 
-### AI agent
+> [!WARNING]  
+> See `DATA_COMPLIANCE` to use crawlers and scrapers respectfully under ToS and regulations
+> [Consider explicit platform agreement for real-time or enterprise scale]
 
+## 🤖 AI agent
+See <samp>AI_agent_and_RAG</samp>
+
+<p>
+Latest and most specific AI/LLMops related modules and integrators are on GCP cloud version of this repository
+
+However, this public GitHub has thousands of lines worth of boilerplate and base modules present
+More than enough for users to start using their AI agent very quickly... and for developers to extend it into their own agent AI logic.
+
+Make sure .env, .neo4j.env and cloud/host configs (e.g. Vertex AI, AuraDS, Neo4j Connectors) are in order for you.
+</p>
+
+Currently available on this repo:
+- Custom embeddings classes and Core OOP Rag Models with metaclass + abstract base classes for extensibility
+- Neo4j and VertexAI integrations/connectors
+- Langchain agent with API LLMs or local quantized models
+- Several defined prompt engineering templates .xml and configs .yaml
+- Boilerplate AI agent Python modular code to start setting up your NLP-powered review sentiments and AI-assisted recommendations
+
+> [!TIP]  
 > See main demo video about GraphRAG and GCP vector DB RAG Hybrid to leverage LLMs in reader sentiment analysis tasks
-
-> Currently: Most of the boilerplate and working source files/code are on GCP cloud version of this repository
-
-> CONTACT ME FOR PARTIAL OR FULL ACCESS/COLLAB
+> **CONTACT ME FOR PARTIAL OR FULL ACCESS/COLLAB**
 
 ---
 
 ## 🎓 Use Cases
 
 ### For Data Engineers
-- **Reference Implementation**: Production-ready ETL pipeline handling 100K+ records
+- **Reference Implementation**: Production-ready ETL pipeline handling 100K+ records at least, in single concurrent run
 - **API Integration Patterns**: Caching, rate limiting, error handling best practices
 - **Database Design**: Normalized schema with optimized indexes and constraints
 
@@ -506,10 +541,16 @@ This is an active project with ongoing development. Contributions welcome in:
 - Personal GUIs, dashboards, etc... 
 - Documentation and tutorials of forks/personal non-commerical instances of project
 
-**Contact for full-access**: Open an issue or reach out directly for collaboration opportunities.
+> [!IMPORTANT]  
+> Please review docs, legal notices and `CODE_OF_CONDUCT` before beginning work with this project
+> **Contact for full-access**
 
+### 📞 Contact
 
----
+- 🏷️ Use GitHub Issues tab ! 30+ relevant labels and story formats for contributors
+- 📧 Discussions on this repo or through github email @ChiefsBestPal
+- ▶️ For demos & visual intros: [YouTube BooksScrapeDB_Recommends](https://www.youtube.com/playlist?list=PL6hHppWLCxCdjfyBlpFfAz55sZCzA0KyN)
+
 
 ## 📈 Project Status
 
@@ -524,26 +565,45 @@ Common updates could include:
 - AI agent/LLM prompt engineering
 
 ### 🤖 Currently focusing on AI solutions
-Fully integrated & connected AI agent using RAG with GCP Vector DB + Knowledge Graph Neo4j
+- Fully integrated & connected AI agent using RAG with GCP Vector DB + Knowledge Graph Neo4j
+- CURRENT STABLE: OpenAI API and local quantized LLMs depending on token cost
+- EXPERIMENTAL: Claude Anthropic Desktop + MCP connectors
 
+## ⚖️ Legal & Compliance Summary
 
+**Educational & Research Platform** first | Enterprise-scale data collection/mining requires third-party / origin site require explicit agreements.
+
+### Data Sources & Privacy
+- **Multi-source aggregation**: Goodreads sites/datasets, Google Books, OpenLibrary (community content), ISBNdb, and external literary catalogs cross-referenced via ISBN
+- **User anonymization**: All reviewer identities anonymized in outputs; no PII collected
+- **Compliance**: Rate limiting, robots.txt adherence, transparent User-Agent identification
+- **Code obfuscation**: Prevents unauthorized large-scale misuse while maintaining open-source transparency
+
+### Usage Guidelines
+- ✅ **Educational/Research/Portfolio**: Demonstration of ETL, graph analytics, AI/ML integration
+- ⚠️ **Production/Commercial**: Requires explicit platform agreements and regulatory compliance
+- 📋 **Your responsibility**: Ensure your use complies with applicable Terms of Service
+
+### Comprehensive Legal Documents and Compliance Guides
+- `CODE_OF_CONDUCT`
+- `PRIVACY_POLICY`
+- `DATA_COMPLIANCE`
+- `SECURITY`
+
+### Trademarks
+<pre>
+     Goodreads™, Google Books™, OpenLibrary™, ISBNdb™ are property of their respective owners or parent LLCs.
+     This public repo project is not affiliated with or endorsed by any third-party platforms.
+     "BookScrapeDB_Recommends" is a non-registered trademark of A. Cantin 2024, permissive for open-source non-commercial scale
+</pre>
 
 ## 📄 License & Copyright
+Licensed under **GNU Affero General Public License v3.0** - See [LICENSE](./LICENSE) 
 
-**Copyright © 2024-Present Antoine Cantin (ChiefsBestPal)**
+Transformative and original content. **Copyright © 2024-Present Antoine Cantin (@ChiefsBestPal)**
 
 All rights reserved. Contact for licensing inquiries.
 
-
-
-## 📞 Contact & Links
-
-- **Demo Videos**: [YouTube Playlist](https://www.youtube.com/playlist?list=PL6hHppWLCxCdjfyBlpFfAz55sZCzA0KyN)
-- **Issues**: GitHub Issues tab
-- **Collaboration**: Open to partnerships and contributions
-
 ---
 
-### ⭐ If you find this project useful, please star the repository!
-
-**Built with precision, scaled for production, designed for insight.**
+# ⭐ If you find this project useful or are interested in contribution, star this repo !
