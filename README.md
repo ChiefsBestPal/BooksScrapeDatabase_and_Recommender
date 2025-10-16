@@ -185,23 +185,121 @@ Project licensing, terms of use, contribution guidelines
 [![Status](https://img.shields.io/badge/Status-Active_Development-success?style=flat-square)]()
 [![Maintained](https://img.shields.io/badge/Maintained-Yes-green?style=flat-square)]()
 
-- [Video Demonstrations](#-video-demonstrations)
-  - [Platform Overview (with timestamps)](#platform-overview-full-walkthrough)
-  - [Success Stories](#success-stories)
-  - [Advanced Analytics](#advanced-analytics)
-- [Platform Screenshots](#-platform-screenshots)
-  - [User Interfaces](#user-interface)
-  - [Technical Architecture](#technical-architecture)
-  - [Data Processing Pipeline](#data-processing-pipeline)
-- [Key Features](#-key-features)
-- [Architecture Overview](#-architecture-overview)
-- [Tech Stack](#-tech-stack)
-- [Getting Started](#-getting-started)
-- [Database Setup](#-database-setup)
-- [Use Cases](#-use-cases)
-- [Contributing](#-contributing)
-- [License](#-license)
-- [Contact](#-contact)
+## 📋 Table of Contents
+
+<details>
+<summary><b>🎬 Videos: <i>BookScrapeDB_Recommends</i> in Action</b></summary>
+
+- [Platform Core Walkthrough](#platform-core-walkthrough-1min34)
+- [✨ User Demos & Success Stories](#-user-demos--success-stories-57sec)
+- [🔬 Advanced Unique Recommender Features](#-advanced-unique-recommender-features-38sec)
+
+</details>
+
+<details>
+<summary><b>📸 Platform Screenshots</b></summary>
+
+- [🎨 User Interfaces](#user-interfaces)
+- [⚙️ Technical Architecture](#technical-architecture)
+- [📊 Data Processing Pipeline](#data-processing-pipeline)
+
+</details>
+
+<details>
+<summary><b>📚 Project Overview</b></summary>
+
+- [🎯 Key Technical Achievements, Scale, Impact](#-key-technical-achievements-scale-impact)
+
+</details>
+
+<details>
+<summary><b>⚡ Key Features</b></summary>
+
+- [Data Engineering & ETL](#data-engineering--etl)
+- [Analytics & Intelligence](#analytics--intelligence)
+- [Database Architecture](#database-architecture)
+
+</details>
+
+<details>
+<summary><b>🏗️ Architecture</b></summary>
+
+- [Data Sources](#data-sources)
+- [Entity Relationship Model](#entity-relationship-model)
+
+</details>
+
+<details>
+<summary><b>🚀 Pipeline Workflow</b></summary>
+
+</details>
+
+<details>
+<summary><b>📥 Base Database Setup & Population</b></summary>
+
+- [DML File Loading Order](#dml-file-loading-order)
+- [NoSQL vs SQL vs Cloud Schemas](#nosql-vs-sql-vs-cloud-schemas)
+
+</details>
+
+<details>
+<summary><b>📁 Base ETL Codebase Structure & Highlights</b></summary>
+
+- [🧰 Key Files](#-key-files)
+- [🧾 Example Results](#-example-results)
+
+</details>
+
+<details>
+<summary><b>🔧 Development Notes</b></summary>
+
+- [Performance Optimizations](#performance-optimizations)
+- [Crawler Evolution](#crawler-evolution)
+
+</details>
+
+<details>
+<summary><b>🤖 AI Agent</b></summary>
+
+</details>
+
+<details>
+<summary><b>🎓 Use Cases</b></summary>
+
+- [For Data Engineers](#for-data-engineers)
+- [For Data Scientists](#for-data-scientists)
+- [For Businesses](#for-businesses)
+
+</details>
+
+<details>
+<summary><b>🤝 Contributing</b></summary>
+
+- [📞 Contact](#-contact)
+
+</details>
+
+<details>
+<summary><b>📈 Project Status</b></summary>
+
+- [🤖 Currently Focusing on AI Solutions](#-currently-focusing-on-ai-solutions)
+
+</details>
+
+<details>
+<summary><b>⚖️ Legal & Compliance Summary</b></summary>
+
+- [Data Sources & Privacy](#data-sources--privacy)
+- [Usage Guidelines](#usage-guidelines)
+- [Comprehensive Legal Documents and Compliance Guides](#comprehensive-legal-documents-and-compliance-guides)
+- [Trademarks](#trademarks)
+
+</details>
+
+<details>
+<summary><b>📄 License & Copyright</b></summary>
+
+</details>
 
 ---
 
@@ -209,7 +307,7 @@ Project licensing, terms of use, contribution guidelines
 
 ## 📸 Platform Screenshots
 
-> [!NOTE]  
+> [!TIP]  
 > Click to expand/collapse sections
 
 <details open>
@@ -353,7 +451,7 @@ A comprehensive data engineering solution that aggregates, transforms, and analy
 
 > [!WARNING]  
 > **User generated content and data is ingested and aggregated through several platforms**, under major LLC or simply crowdsourced indepedent platforms
-> Refer to [CODE OF CONDUCT](./CODE_OF_CONDUCT.md) and [DATA COMPLIANCE](./docs/DATA_COMPLIANCE.md) for legal notices and compliant practices when collecting and mining such profiling/behavioral data
+> Refer to [CODE OF CONDUCT](./CODE_OF_CONDUCT.md) and [DATA COMPLIANCE](/DATA_COMPLIANCE.md) for legal notices and compliant practices when collecting and mining such profiling/behavioral data
 
 ### Entity Relationship Model
 
@@ -451,7 +549,7 @@ You need to look at the right maintenance, schemas and DDL scripts
 * **`.../spiders/`** → Multiple compliant crawler types (1. lists, 2. user profiles, 3. reviews) for different Goodreads/Google/Externally-linked-platform data 
 
 > [!WARNING]  
-> See [DATA COMPLIANCE](./docs/DATA_COMPLIANCE.md) to use crawlers and scrapers respectfully under ToS and regulations
+> See [DATA COMPLIANCE](/DATA_COMPLIANCE.md) to use crawlers and scrapers respectfully under ToS and regulations
 > [Consider explicit platform agreement for real-time or enterprise scale]
 
 ---
@@ -460,7 +558,7 @@ You need to look at the right maintenance, schemas and DDL scripts
 
 Over multiple large runs:
 
-* Data retrieved from **Goodreads**, **GoogleBooks**, **OpenLibrary**, **ISBNdb** and Externally linked independent sites and data stores (See attributions and compliance in [CODE OF CONDUCT](./CODE_OF_CONDUCT.md), [DATA COMPLIANCE](./docs/DATA_COMPLIANCE.md), [PRIVACY POLICY](./docs/PRIVACY_POLICY.md))
+* Data retrieved from **Goodreads**, **GoogleBooks**, **OpenLibrary**, **ISBNdb** and Externally linked independent sites and data stores (See attributions and compliance in [CODE OF CONDUCT](./CODE_OF_CONDUCT.md), [DATA COMPLIANCE](/DATA_COMPLIANCE.md), [PRIVACY POLICY](./Docs/PRIVACY_POLICY.md))
 * In one concurrent run: Over **1 GB** of cleaned, aggregated, structured and semi-structured data created
 * Full transformation from raw data → SQL schema → Neo4j Graph → Analytics dashboards
 * Enables **OLAP**, **community segmentation**, and **AI-assisted recommendation**
@@ -487,7 +585,7 @@ Original inspiration from [GoodreadsScraper](https://github.com/havanagrawal/Goo
 - Parallel processing capabilities
 
 > [!WARNING]  
-> See [DATA COMPLIANCE](./docs/DATA_COMPLIANCE.md) to use crawlers and scrapers respectfully under ToS and regulations
+> See [DATA COMPLIANCE](./Docs/DATA_COMPLIANCE.md) to use crawlers and scrapers respectfully under ToS and regulations
 > [Consider explicit platform agreement for real-time or enterprise scale]
 
 ## 🤖 AI agent
@@ -590,8 +688,8 @@ Common updates could include:
 
 ### Comprehensive Legal Documents and Compliance Guides
 - [CODE OF CONDUCT and TERMS OF SERVICE](./CODE_OF_CONDUCT.md)
-- [PRIVACY POLICY AND GUIDE](./docs/PRIVACY_POLICY.md)
-- [DATA COMPLIANCE GUIDES AND NOTICES](./docs/DATA_COMPLIANCE.md)
+- [PRIVACY POLICY AND GUIDE](./Docs/PRIVACY_POLICY.md)
+- [DATA COMPLIANCE GUIDES AND NOTICES](./Docs/DATA_COMPLIANCE.md)
 - [SECURITY](./SECURITY.md) 
 
 ### Trademarks
