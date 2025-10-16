@@ -209,8 +209,11 @@ Project licensing, terms of use, contribution guidelines
 
 ## 📸 Platform Screenshots
 
+> [!NOTE]  
+> Click to expand/collapse sections
+
 <details open>
-<summary><b>🎨 User Interfaces</b> (Click to expand/collapse)</summary>
+<summary><table><tr><td><b>🎨 User Interfaces</b></td></tr></table> </summary>
 <br>
 <div align="center">
 <img  src="https://github.com/user-attachments/assets/7327eac1-abf0-4bac-97f1-eb7aa72d3125" alt="Pagerank+Closeness+Centrality Influence Network">
@@ -236,8 +239,9 @@ Project licensing, terms of use, contribution guidelines
 
 </details>
 
+<br>
 <details>
-<summary><b>⚙️ Technical Architecture</b></summary>
+<summary><table><tr><td><b>⚙️ Technical Architecture</b></td></tr></table></summary>
 <br>
 
 ### Database Schema (ERD)
@@ -246,9 +250,9 @@ Project licensing, terms of use, contribution guidelines
 *Normalized relational model with 20+ entities optimized for OLAP*
 
 </details>
-
+<br>
 <details>
-<summary><b>📊 Data Processing Pipeline</b></summary>
+<summary><table><tr><td><b>📊 Data Processing Pipeline</b></td></tr></table></summary>
 <br>
 
 ### Raw Scraped Data
@@ -349,7 +353,7 @@ A comprehensive data engineering solution that aggregates, transforms, and analy
 
 > [!WARNING]  
 > **User generated content and data is ingested and aggregated through several platforms**, under major LLC or simply crowdsourced indepedent platforms
-> Refer to `CODE_OF_CONDUCT` and `DATA_COMPLIANCE` for legal notices and compliant practices when collecting and mining such profiling/behavioral data
+> Refer to [CODE OF CONDUCT](./CODE_OF_CONDUCT.md) and [DATA COMPLIANCE](./docs/DATA_COMPLIANCE.md) for legal notices and compliant practices when collecting and mining such profiling/behavioral data
 
 ### Entity Relationship Model
 
@@ -447,7 +451,7 @@ You need to look at the right maintenance, schemas and DDL scripts
 * **`.../spiders/`** → Multiple compliant crawler types (1. lists, 2. user profiles, 3. reviews) for different Goodreads/Google/Externally-linked-platform data 
 
 > [!WARNING]  
-> See `DATA_COMPLIANCE` to use crawlers and scrapers respectfully under ToS and regulations
+> See [DATA COMPLIANCE](./docs/DATA_COMPLIANCE.md) to use crawlers and scrapers respectfully under ToS and regulations
 > [Consider explicit platform agreement for real-time or enterprise scale]
 
 ---
@@ -456,7 +460,7 @@ You need to look at the right maintenance, schemas and DDL scripts
 
 Over multiple large runs:
 
-* Data retrieved from **Goodreads**, **GoogleBooks**, **OpenLibrary**, **ISBNdb** and Externally linked independent sites and data stores (See attributions and compliance in `CODE_OF_CONDUCT`, `DATA_COMPLIANCE`, `PRIVACY_POLICY`)
+* Data retrieved from **Goodreads**, **GoogleBooks**, **OpenLibrary**, **ISBNdb** and Externally linked independent sites and data stores (See attributions and compliance in [CODE OF CONDUCT](./CODE_OF_CONDUCT.md), [DATA COMPLIANCE](./docs/DATA_COMPLIANCE.md), [PRIVACY POLICY](./docs/PRIVACY_POLICY.md))
 * In one concurrent run: Over **1 GB** of cleaned, aggregated, structured and semi-structured data created
 * Full transformation from raw data → SQL schema → Neo4j Graph → Analytics dashboards
 * Enables **OLAP**, **community segmentation**, and **AI-assisted recommendation**
@@ -483,7 +487,7 @@ Original inspiration from [GoodreadsScraper](https://github.com/havanagrawal/Goo
 - Parallel processing capabilities
 
 > [!WARNING]  
-> See `DATA_COMPLIANCE` to use crawlers and scrapers respectfully under ToS and regulations
+> See [DATA COMPLIANCE](./docs/DATA_COMPLIANCE.md) to use crawlers and scrapers respectfully under ToS and regulations
 > [Consider explicit platform agreement for real-time or enterprise scale]
 
 ## 🤖 AI agent
@@ -542,7 +546,7 @@ This is an active project with ongoing development. Contributions welcome in:
 - Documentation and tutorials of forks/personal non-commerical instances of project
 
 > [!IMPORTANT]  
-> Please review docs, legal notices and `CODE_OF_CONDUCT` before beginning work with this project
+> Please review docs, legal notices and [CODE OF CONDUCT](./CODE_OF_CONDUCT.md) before beginning work with this project
 > **Contact for full-access**
 
 ### 📞 Contact
@@ -585,10 +589,10 @@ Common updates could include:
 - 📋 **Your responsibility**: Ensure your use complies with applicable Terms of Service
 
 ### Comprehensive Legal Documents and Compliance Guides
-- `CODE_OF_CONDUCT`
-- `PRIVACY_POLICY`
-- `DATA_COMPLIANCE`
-- `SECURITY`
+- [CODE OF CONDUCT and TERMS OF SERVICE](./CODE_OF_CONDUCT.md)
+- [PRIVACY POLICY AND GUIDE](./docs/PRIVACY_POLICY.md)
+- [DATA COMPLIANCE GUIDES AND NOTICES](./docs/DATA_COMPLIANCE.md)
+- [SECURITY](./SECURITY.md) 
 
 ### Trademarks
 <pre>
@@ -604,6 +608,7 @@ Transformative and original content. **Copyright © 2024-Present Antoine Cantin 
 
 All rights reserved. Contact for licensing inquiries.
 
----
+
+<br>
 
 # ⭐ If you find this project useful or are interested in contribution, star this repo !
