@@ -1,6 +1,41 @@
+# Crawling, Scraping and Ingesting for *BookScrapeDB_Recommends*'s ETL
+
+## NOTE BEFORE INTRO: Data Source Compliance
+This toolset processes data from **multiple sources**, datasets, APIs, sites, etc.. with appropriate compliance measures:
+
+**Multi-Source User Content:**
+- **Goodreads**: ⚠️ Only with explicit agreements or from post 2021/post 2024 datasets; Crawlers provided here are under strict regulation. <ins>**See `DATA_COMPLIANCE` and `CODE_OF_CONDUCT`**</ins>
+- **Google Books**: User reviews via official API and google users from platform
+- **OpenLibrary**: Community annotations and reviews
+- **External Catalogs**: ⚠️ Independent literary databases linked via ISBN cross-referencing. Should be both validated origins for data integrity and external compliance
+- **Cross-Platform Data**: Same books reviewed across multiple platforms
+
+**Official APIs (Fully Compliant):**
+- ✅ **Google Books API**: Authorized access with API key and rate limiting
+- ✅ **OpenLibrary API**: Open data initiative (public domain)
+- ✅ **ISBNdb API**: Subscription-based access for ISBN validation
+
+**Key Point**: User-generated content aggregated from **diverse sources** (Google Books reviews, OpenLibrary community, external catalogs), not solely dependent on any single platform.
+
+### Usage Compliance
+**Production/Commercial Use**: Requires explicit written agreements with applicable platforms and regulatory compliance verification.
+
+**Educational/Research/Portfolio Use**: Acceptable for demonstration, learning, and non-commercial exploration.
+
+**Your Responsibility**: Ensure your specific use case complies with:
+- Explicit agreements or minimal rate/throttle or robot.txt (Goodreads)
+- Platform Terms of Service (Google Books, OpenLibrary, etc.)
+- Data protection regulations (GDPR, CCPA)
+- Academic/institutional ethics policies
+- Local laws regarding data collection
+
 ## Introduction
 
-Scrapy webscrapping x crawlers project to get data from Goodreads.
+Scrapy webscrapping x crawlers project to get data from Goodreads, Google books, External catalogs etc...
+
+This approach will mainly use crawling/ingestion from goodreads and google books, but please feel free to extend and adapt spiders for other platforms.
+
+Not all code is provided and some code is obfuscated for legal and compliance reasons.
 
 ## Installation
 
